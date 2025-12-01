@@ -1,7 +1,8 @@
 use std::fs;
+use std::io;
 use std::process::exit;
 
-pub fn execute(args: &[String]) {
+pub fn execute(args: &[String]) -> io::Result<()> {
     if args.is_empty() {
         println!("Usage: cat asfdasdf");
         exit(-1);
@@ -17,4 +18,5 @@ pub fn execute(args: &[String]) {
             }
         }
     }
+    Ok(())
 }

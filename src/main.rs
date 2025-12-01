@@ -1,4 +1,4 @@
-use std::{env, process::exit};
+use std::{env, io::Error, io::ErrorKind, process::exit};
 mod commands;
 
 fn display_help() {
@@ -20,12 +20,16 @@ fn main() {
 
     let command = &args[1];
 
-    match command.as_str() {
+    let result = match command.as_str() {
         "ls" => commands::ls::execute(),
         "pwd" => commands::pwd::execute(),
         "echo" => commands::echo::execute(&args[2..]),
         "cat" => commands::cat::execute(&args[2..]),
         "mkdir" => commands::mkdir::execute(&args[2..]),
-        _ => println!("Unknown command: {}", command),
+        _ => Err(Error::new(ErrorKind::NotFound, "Unknown command")),
+    };
+
+    if let Err(e) = result {
+        println!("{}", e);
     }
 }

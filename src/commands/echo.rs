@@ -1,12 +1,15 @@
-pub fn execute(args: &[String]) {
+use std::io::{self, Error};
+pub fn execute(args: &[String]) -> io::Result<()> {
     if args.is_empty() {
-        return;
+        return Ok(());
     }
 
     if args[0] == "-n" {
         print!("{}", args[1..].join(" "));
-        return;
+        return Ok(());
     }
 
     println!("{}", args.join(" "));
+
+    Ok(())
 }
